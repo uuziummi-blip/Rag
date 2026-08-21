@@ -1,0 +1,55 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+.venv/
+pip-log.txt
+pip-delete-this-directory.txt
+.tox
+.coverage
+.mypy_cache/
+.pytest_cache/
+*.log
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+# Data files (large files, can regenerate)
+data/raw/*.pdf
+data/raw/*.txt
+data/processed/*.json
+data/index/*.bin
+data/index/*.npy
+data/index/*.json
+outputs/
+*.png
+*.jpg
+
+# Virtual environment
+venv/
+.venv/
+
+# Jupyter Notebooks
+.ipynb_checkpoints/
+*.ipynb
+
+# Environment variables
+.env
+*.env
+
+# OS files
+Thumbs.db
+.DS_Store
+
+# Environment variables
+.env
+*.env
