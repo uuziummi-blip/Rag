@@ -16,7 +16,7 @@ def run_command(cmd, description):
     print("\n" + "=" * 70)
     print(f"{description}")
     print("=" * 70)
-    print(f"▶️  Running: {cmd}")
+    print(f"Running: {cmd}")
     print("-" * 70)
 
     result = subprocess.run(cmd, shell=True, capture_output=True, text=True)
