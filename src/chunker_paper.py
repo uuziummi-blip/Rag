@@ -89,21 +89,21 @@ class DocumentChunker:
 
 def main():
     print("=" * 60)
-    print("📄 CHUNKING THE ATTENTION PAPER")
+    print(" CHUNKING THE ATTENTION PAPER")
     print("=" * 60)
 
     # Path to the paper text file
     paper_path = "data/raw/1706.03762v7.txt"
 
     if not os.path.exists(paper_path):
-        print(f"\n❌ Paper text not found: {paper_path}")
+        print(f"\n Paper text not found: {paper_path}")
         print("   Please run pdf_to_text.py first.")
         return
 
     # Initialize chunker
     chunker = DocumentChunker(chunk_size=250, overlap=30)
 
-    print(f"\n📖 Loading paper from: {paper_path}")
+    print(f"\n Loading paper from: {paper_path}")
     with open(paper_path, "r", encoding="utf-8") as f:
         text = f.read()
 
@@ -111,14 +111,14 @@ def main():
     print(f"   Approximate tokens: {len(text.split())}")
 
     # Chunk the paper
-    print("\n🔪 Chunking the paper...")
+    print("\n Chunking the paper...")
     chunks = chunker.chunk_text(text)
 
     # Add source info
     for chunk in chunks:
         chunk["source_file"] = paper_path
 
-    print(f"\n📊 Created {len(chunks)} chunks")
+    print(f"\n Created {len(chunks)} chunks")
 
     if chunks:
         sizes = [chunk["token_count"] for chunk in chunks]
@@ -131,10 +131,10 @@ def main():
     with open("data/processed/chunks.json", "w", encoding="utf-8") as f:
         json.dump(chunks, f, indent=2, ensure_ascii=False)
 
-    print(f"\n✅ Saved {len(chunks)} chunks to data/processed/chunks.json")
+    print(f"\n Saved {len(chunks)} chunks to data/processed/chunks.json")
 
     # Show sample chunks
-    print("\n📝 Sample chunks:")
+    print("\n Sample chunks:")
     for i in range(min(3, len(chunks))):
         print(f"\n  Chunk {i}:")
         print(f"    Tokens: {chunks[i]['token_count']}")
