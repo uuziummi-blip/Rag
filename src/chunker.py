@@ -109,7 +109,7 @@ def main():
         print(f"\n📄 Loaded document: {len(full_text)} characters")
         print(f"   File: {file_path}")
     except FileNotFoundError:
-        print(f"\n❌ Error: File not found at {file_path}")
+        print(f"\n Error: File not found at {file_path}")
         return
 
     chunks = chunker.chunk_text(full_text)
