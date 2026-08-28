@@ -1,7 +1,4 @@
-# run_full_pipeline.py
 """
-Complete RAG pipeline for the Attention paper.
-Run this to:
 1. Convert PDF to text
 2. Chunk the text
 3. Create embeddings
@@ -17,7 +14,7 @@ import sys
 def run_command(cmd, description):
     """Run a command with description."""
     print("\n" + "=" * 70)
-    print(f"📌 {description}")
+    print(f"{description}")
     print("=" * 70)
     print(f"▶️  Running: {cmd}")
     print("-" * 70)
@@ -34,13 +31,13 @@ def run_command(cmd, description):
 
 def main():
     print("=" * 70)
-    print("🚀 RAG PIPELINE FOR ATTENTION PAPER")
+    print(" RAG PIPELINE FOR ATTENTION PAPER")
     print("=" * 70)
 
     # Check if PDF exists
     pdf_path = "data/raw/1706.03762v7.pdf"
     if not os.path.exists(pdf_path):
-        print(f"\n❌ PDF not found: {pdf_path}")
+        print(f"\n PDF not found: {pdf_path}")
         print("   Please place the 'Attention Is All You Need' paper at:")
         print("   data/raw/1706.03762v7.pdf")
         return
@@ -51,7 +48,7 @@ def main():
     # Step 2: Check if text file was created
     txt_path = "data/raw/1706.03762v7.txt"
     if not os.path.exists(txt_path):
-        print(f"\n❌ Text file not created: {txt_path}")
+        print(f"\n Text file not created: {txt_path}")
         return
 
     # Step 3: Chunk the paper
@@ -65,9 +62,9 @@ def main():
 
     # Step 6: Run interactive Q&A
     print("\n" + "=" * 70)
-    print("✅ PIPELINE COMPLETE!")
+    print("PIPELINE COMPLETE!")
     print("=" * 70)
-    print("\n🚀 Starting interactive Q&A with the Attention paper...")
+    print("\n Starting interactive Q&A with the Attention paper...")
     print("   Ask questions about the Transformer, attention, BLEU scores, etc.")
     print("   Type 'quit' to exit.")
     print("-" * 70)
