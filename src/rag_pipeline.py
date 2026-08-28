@@ -11,7 +11,7 @@ load_dotenv()
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 
 if not GROQ_API_KEY:
-    print("❌ ERROR: GROQ_API_KEY not found in .env file!")
+    print("   ERROR: GROQ_API_KEY not found in .env file!")
     print("   Please create a .env file with:")
     print("   GROQ_API_KEY=your_key_here")
     exit()
@@ -25,16 +25,16 @@ TEMPERATURE = 0.3
 class RAGWithGroq:
     def __init__(self):
         print("=" * 60)
-        print("🤖 RAG WITH GROQ API (INTERACTIVE)")
+        print(" RAG WITH GROQ API (INTERACTIVE)")
         print("=" * 60)
 
-        print("\n📥 Loading embedding model...")
+        print("\n Loading embedding model...")
         self.embedder = SentenceTransformer("sentence-transformers/all-MiniLM-L6-v2")
 
-        print("📂 Loading index...")
+        print(" Loading index...")
         self.load_index()
 
-        print("\n🔑 Initializing Groq client...")
+        print("\n Initializing Groq client...")
         self.client = Groq(api_key=GROQ_API_KEY)
         self.model_name = MODEL_NAME
 
@@ -44,10 +44,10 @@ class RAGWithGroq:
                 messages=[{"role": "user", "content": "Hello"}],
                 max_tokens=5,
             )
-            print(f"✅ Connected! Using: {self.model_name}")
+            print(f" Connected! Using: {self.model_name}")
             self.model_loaded = True
         except Exception as e:
-            print(f"❌ Error: {e}")
+            print(f" Error: {e}")
             self.model_loaded = False
 
     def load_index(self):
@@ -61,7 +61,7 @@ class RAGWithGroq:
                 with open("data/index/metadata.json", "r", encoding="latin-1") as f:
                     self.metadata = json.load(f)
             except FileNotFoundError:
-                print("❌ metadata.json not found. Running embeddings.py first...")
+                print(" metadata.json not found. Running embeddings.py first...")
                 return
 
             for item in self.metadata:
@@ -70,19 +70,19 @@ class RAGWithGroq:
                         item["text"].encode("ascii", "ignore").decode("ascii")
                     )
 
-            print(f"✅ Loaded {self.index.ntotal} vectors")
-            print(f"✅ Loaded {len(self.metadata)} metadata entries")
+            print(f" Loaded {self.index.ntotal} vectors")
+            print(f" Loaded {len(self.metadata)} metadata entries")
 
         except FileNotFoundError as e:
-            print(f"❌ Error: {e}")
+            print(f" Error: {e}")
             print("   Please run embeddings.py and vector_store.py first.")
             exit()
         except Exception as e:
-            print(f"❌ Error loading index: {e}")
+            print(f" Error loading index: {e}")
             exit()
 
     def search(self, query, k=TOP_K):
-        print(f"\n🔍 Searching for: '{query}'")
+        print(f"\n Searching for: '{query}'")
 
         query_vector = self.embedder.encode(query, normalize_embeddings=True)
         query_vector = query_vector.astype(np.float32).reshape(1, -1)
@@ -144,7 +144,7 @@ ANSWER:"""
             )
             return response.choices[0].message.content.strip()
         except Exception as e:
-            return f"❌ Error: {e}"
+            return f" Error: {e}"
 
     def show_context_only(self, chunks):
         context_parts = []
@@ -156,7 +156,7 @@ ANSWER:"""
 
     def ask(self, query):
         print("\n" + "=" * 60)
-        print(f"❓ QUESTION: {query}")
+        print(f" QUESTION: {query}")
         print("=" * 60)
 
         chunks = self.search(query)
@@ -168,13 +168,13 @@ ANSWER:"""
             }
 
         if self.model_loaded:
-            print(f"\n⚡ Generating answer using {self.model_name}...")
+            print(f"\n Generating answer using {self.model_name}...")
             prompt = self.build_prompt(query, chunks)
             answer = self.generate_answer(prompt)
             if answer is None:
                 answer = self.show_context_only(chunks)
         else:
-            print("\n⚠️ No model available. Showing context only.")
+            print("\n No model available. Showing context only.")
             answer = self.show_context_only(chunks)
 
         sources = []
@@ -206,11 +206,11 @@ def main():
         query = input("❓ Your question: ").strip()
 
         if query.lower() in ["quit", "exit", "q"]:
-            print("\n👋 Goodbye!")
+            print("\n Goodbye!")
             break
 
         if not query:
-            print("⚠️ Please enter a question.")
+            print(" Please enter a question.")
             continue
 
         if query.lower() == "sources":
@@ -229,12 +229,12 @@ def main():
         last_result = result
 
         print("\n" + "=" * 60)
-        print("📝 ANSWER:")
+        print(" ANSWER:")
         print("=" * 60)
         print(result["answer"])
 
         if result["sources"]:
-            print("\n📚 SOURCES (showing 3):")
+            print("\n SOURCES (showing 3):")
             for source in result["sources"][:3]:
                 print(
                     f"   [Chunk {source['chunk_id']}] Distance: {source['distance']:.4f}"
