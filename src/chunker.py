@@ -114,7 +114,7 @@ def main():
 
     chunks = chunker.chunk_text(full_text)
 
-    print(f"\n📊 Created {len(chunks)} chunks:")
+    print(f"\n Created {len(chunks)} chunks:")
     print("-" * 60)
 
     for chunk in chunks:
@@ -129,7 +129,7 @@ def main():
         json.dump(chunks, f, indent=2, ensure_ascii=False)
 
     print("\n" + "=" * 60)
-    print(f"✅ Saved {len(chunks)} chunks to data/processed/chunks.json")
+    print(f" Saved {len(chunks)} chunks to data/processed/chunks.json")
 
 
 if __name__ == "__main__":
