@@ -22,7 +22,7 @@ class VectorStore:
     def create_index(self):
         self.index = faiss.IndexFlatL2(self.dimension)
         self.is_initialized = True
-        print(f"✅ Created FAISS index (dimension: {self.dimension})")
+        print(f"Created FAISS index (dimension: {self.dimension})")
 
     def add_vectors(self, vectors: np.ndarray, metadata: List[Dict[str, Any]]):
         if not self.is_initialized:
@@ -37,12 +37,12 @@ class VectorStore:
         self.index.add(vectors)
         self.metadata.extend(metadata)
 
-        print(f"✅ Added {len(vectors)} vectors to index")
+        print(f"Added {len(vectors)} vectors to index")
         print(f"   Total vectors in index: {self.index.ntotal}")
 
     def search(self, query_vector: np.ndarray, k: int = 3) -> List[Dict[str, Any]]:
         if not self.is_initialized or self.index.ntotal == 0:
-            print("⚠️ Index is empty. Please add vectors first.")
+            print("Index is empty. Please add vectors first.")
             return []
 
         query_vector = query_vector.astype(np.float32).reshape(1, -1)
@@ -76,8 +76,8 @@ class VectorStore:
                 # Replace any problematic characters
                 item["text"] = item["text"].encode("ascii", "ignore").decode("ascii")
 
-        print(f"✅ Loaded index with {self.index.ntotal} vectors")
-        print(f"✅ Loaded {len(self.metadata)} metadata entries")
+        print(f"Loaded index with {self.index.ntotal} vectors")
+        print(f"Loaded {len(self.metadata)} metadata entries")
 
     def save_to_disk(
         self,
@@ -85,7 +85,7 @@ class VectorStore:
         metadata_path: str = "data/index/metadata.json",
     ):
         if not self.is_initialized or self.index is None:
-            print("⚠️ No index to save. Create/add vectors first.")
+            print("No index to save. Create/add vectors first.")
             return
 
         os.makedirs(os.path.dirname(index_path), exist_ok=True)
@@ -95,8 +95,8 @@ class VectorStore:
         with open(metadata_path, "w", encoding="utf-8") as f:
             json.dump(self.metadata, f, indent=2, ensure_ascii=False)
 
-        print(f"✅ Saved index to {index_path}")
-        print(f"✅ Saved metadata to {metadata_path}")
+        print(f"Saved index to {index_path}")
+        print(f"Saved metadata to {metadata_path}")
 
 
 def main():
@@ -120,25 +120,25 @@ def main():
         print(f"   Loaded {len(metadata)} metadata entries")
 
     except FileNotFoundError as e:
-        print(f"❌ Error: {e}")
+        print(f"Error: {e}")
         print("   Please run embeddings.py first.")
         return
 
-    print("\n📦 Creating vector store...")
+    print("\n Creating vector store...")
     store = VectorStore(dimension=embeddings.shape[1])
     store.create_index()
 
-    print("\n📤 Adding vectors to index...")
+    print("\n Adding vectors to index...")
     store.add_vectors(embeddings, metadata)
 
-    print("\n💾 Saving to disk...")
+    print("\n Saving to disk...")
     store.save_to_disk()
 
-    print("\n🔍 Testing search...")
+    print("\n Testing search...")
     query_vector = embeddings[0]
     results = store.search(query_vector, k=2)
 
-    print(f"\n📊 Search Results:")
+    print(f"\n Search Results:")
     for i, result in enumerate(results):
         print(f"\n  Result {i+1}:")
         print(f"    Chunk ID: {result['chunk_id']}")
